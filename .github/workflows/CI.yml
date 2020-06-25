@@ -1,0 +1,32 @@
+name: pyarrow bug  # JIRA ARROW 9229
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  reproduce-bug:
+    name: Example (Python ${{ matrix.python-version }}, Pyarrow ${{ matrix.pyarrow-version }}, On ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, windows-2019]
+        python-version: [3.6, 3.7, 3.8]
+        pyarrow-version: [0.15, 0.16, 0.17]
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: goanpeca/setup-miniconda@v1
+      with:
+       auto-update-conda: false
+       python-version: ${{ matrix.python-version }}
+       auto-activate-base: false
+
+    - name: Install pyarrow
+      run: conda install -c conda-forge pyarrow=${{ matrix.pyarrow-version }} -y
+
+    - name: Output hardware config
+      run: python output_config.py
+
+    - name: Test pyarrow read_table
+      run: python test_pyarrow.py
