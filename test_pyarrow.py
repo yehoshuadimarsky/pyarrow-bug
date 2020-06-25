@@ -8,6 +8,12 @@ table = pa.Table.from_arrays([list(range(0,10)), list(range(10,20))], names=['a'
 
 pq.write_table(table, 'foo.snappy.parquet', compression='snappy')
 
+print(
+    'ok, got up to here so far.' 
+    'Created the Snappy encoded Parquet file, will try to read it now...'
+    'Python might just crash suddenly.'
+)
+
 tbl = pq.read_table('foo.snappy.parquet')
 
-assert False, "good we got this far, means pyarrow worked correctly"  # to raise an error
+print("good we got this far, means pyarrow worked correctly")
