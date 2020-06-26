@@ -8,10 +8,11 @@ jobs:
   reproduce-bug:
     name: Example (Python ${{ matrix.python-version }}, Pyarrow ${{ matrix.pyarrow-version }}, On ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, windows-2019]
+        os: [windows-latest]
         python-version: [3.6, 3.7, 3.8]
         pyarrow-version: [0.15, 0.16, 0.17]
 
